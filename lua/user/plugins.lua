@@ -61,6 +61,14 @@ return packer.startup(function(use)
   -- Git
   use "lewis6991/gitsigns.nvim"
 
+  -- File tree sidebar
+  use {
+    'nvim-tree/nvim-tree.lua',
+    requires = {
+      'nvim-tree/nvim-web-devicons', -- optional, for file icons
+    },
+  }
+
   -- Snippets
   use "L3MON4D3/LuaSnip" --snippet engine
   use "rafamadriz/friendly-snippets" -- a bunch of snippets to use

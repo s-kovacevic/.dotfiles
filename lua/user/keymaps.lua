@@ -32,7 +32,7 @@ vim.cmd [[ command! Format execute 'lua vim.lsp.buf.format({ async = true })' ]]
 keymap("n", "<leader>r", "<cmd>Format<cr>", opts)
 
 -- Show file tree
-keymap("n", "<leader>e", ":Lex 20<cr>", opts)
+keymap("n", "<leader>e", ":NvimTreeToggle<cr>", opts)
 
 -- Resize with arrows
 keymap("n", "<C-Up>", ":resize +2<CR>", opts)
