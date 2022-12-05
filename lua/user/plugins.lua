@@ -41,6 +41,7 @@ return packer.startup(function(use)
   use "hrsh7th/cmp-cmdline" -- cmdline completions
   use "hrsh7th/cmp-nvim-lsp" -- lsp completions
   use "saadparwaiz1/cmp_luasnip" -- snippet completions
+  use "windwp/nvim-autopairs" -- Autopairs, integrates with both cmp and treesitter
 
   -- LSP
   use "williamboman/mason.nvim" -- simple language server installer
@@ -52,6 +53,13 @@ return packer.startup(function(use)
 
   -- Treesitter
   use "nvim-treesitter/nvim-treesitter"
+
+  -- Comments
+  use "numToStr/Comment.nvim"
+  use "JoosepAlviste/nvim-ts-context-commentstring"
+
+  -- Git
+  use "lewis6991/gitsigns.nvim"
 
   -- Snippets
   use "L3MON4D3/LuaSnip" --snippet engine
