@@ -69,6 +69,9 @@ return packer.startup(function(use)
     },
   }
 
+  -- Tabs
+  use {'romgrk/barbar.nvim', wants = 'nvim-web-devicons'}
+
   -- Snippets
   use "L3MON4D3/LuaSnip" --snippet engine
   use "rafamadriz/friendly-snippets" -- a bunch of snippets to use

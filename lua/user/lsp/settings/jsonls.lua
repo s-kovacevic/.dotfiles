@@ -1,4 +1,5 @@
 -- Find more schemas here: https://www.schemastore.org/json/
+-- TODO: reduce this to only used ones
 local schemas = {
   {
     description = "TypeScript compiler configuration file",
@@ -162,8 +163,6 @@ local schemas = {
     url = "https://raw.githubusercontent.com/jsonresume/resume-schema/v1.0.0/schema.json",
   },
 }
-
-local extended_schemas = extend(schemas, default_schemas)
 
 local opts = {
   settings = {
