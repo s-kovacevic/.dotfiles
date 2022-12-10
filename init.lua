@@ -22,4 +22,5 @@ require("user.gitsigns")
 require("user.nvimtree")
 require("user.barbar")
 require("user.null-ls")
+require("user.lualine")
 

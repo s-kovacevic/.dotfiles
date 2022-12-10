@@ -85,6 +85,9 @@ return packer.startup(function(use)
   use({ "L3MON4D3/LuaSnip", lock = true }) --snippet engine
   use({ "rafamadriz/friendly-snippets", lock = true }) -- a bunch of snippets to use
 
+  -- Status line
+  use({ "nvim-lualine/lualine.nvim", lock = true })
+
   -- Color schemes
   use({ "ellisonleao/gruvbox.nvim", lock = true })
   use({ "lunarvim/darkplus.nvim", lock = true })
