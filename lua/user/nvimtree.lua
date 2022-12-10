@@ -8,9 +8,9 @@ if not config_status_ok then
   return
 end
 
-local tree_cb = nvim_tree_config.nvim_tree_callback
+local nvimtree_callback = nvim_tree_config.nvim_tree_callback
 
-nvim_tree.setup {
+nvim_tree.setup({
   disable_netrw = true,
   hijack_netrw = true,
   open_on_setup = false,
@@ -47,24 +47,21 @@ nvim_tree.setup {
   },
   view = {
     width = 30,
-    height = 30,
     hide_root_folder = false,
     side = "left",
-    auto_resize = true,
     mappings = {
       custom_only = false,
       list = {
-        { key = { "l", "<CR>", "o" }, cb = tree_cb "edit" },
-        { key = "h", cb = tree_cb "close_node" },
-        { key = "v", cb = tree_cb "vsplit" },
+        { key = { "l", "<CR>", "o" }, cb = nvimtree_callback("edit") },
+        { key = "h", cb = nvimtree_callback("close_node") },
+        { key = "v", cb = nvimtree_callback("vsplit") },
       },
     },
     number = false,
     relativenumber = false,
   },
-  actions = {
-    quit_on_open = true,
-    window_picker = { enable = true },
+  filters = {
+    dotfiles = true,
   },
   renderer = {
     highlight_git = true,
@@ -98,4 +95,4 @@ nvim_tree.setup {
       }
     }
   }
-}
+})

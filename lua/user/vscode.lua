@@ -1,3 +1,4 @@
+local util = require("user.util")
 local CONFIG_PATH = ".vscode/settings.json"
 
 local function remove_comments_from_json(json_string)
@@ -28,7 +29,8 @@ end
 local config = parse_config() or {}
 
 return {
-  config = config,
-  black_args = config["python.formatting.blackArgs"]
+  black_args = config["python.formatting.blackArgs"],
+  pylint_args = config["python.linting.pylintArgs"],
+  mypy_args = config["python.linting.mypyArgs"],
+  eslint_config_path = util.table_lookup(config, "eslint.options", "configFile")
 }
-

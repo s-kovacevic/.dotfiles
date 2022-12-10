@@ -3,29 +3,52 @@ if not ok then
   print "null-ls not installed"
   return
 end
+local vscode = require("user.vscode")
+local util = require("user.util")
 
-local workspace_root = vim.fn.getcwd()
-
-null_ls.setup({
-  debug = true,
-  sources = {
+local sources = {}
+if util.command_exists("black") then
+  table.insert(
+    sources,
     null_ls.builtins.formatting.black.with({
-      extra_args = { "--line-length", "119", "--target-version", "py310" }
-    }),
-    null_ls.builtins.diagnostics.pylint.with({
-      extra_args = { "--load-plugins=pylint_django", "--init-hook",
-        "import sys;sys.path.append('" .. workspace_root .. "/backend')", "--rcfile",
-        workspace_root .. "/backend/.pylintrc" }
-    }),
-    null_ls.builtins.diagnostics.mypy.with({
-      extra_args = { "--config-file", "backend/mypy.ini" },
-      cwd = function (_) return vim.fn.getcwd() end
-    }),
-    null_ls.builtins.diagnostics.eslint.with({
-      extra_args = { "-c", workspace_root .. "/frontend/.eslintrc" }
-    }),
-    null_ls.builtins.diagnostics.flake8.with({
-      extra_args = { "--config", workspace_root .. "/backend/.flake8" }
+      extra_args = vscode.black_args
     })
-  },
-})
+  )
+end
+
+if util.command_exists("pylint") then
+  table.insert(
+    sources,
+    null_ls.builtins.diagnostics.pylint.with({
+      extra_args = vscode.pylint_args
+    })
+  )
+end
+
+if util.command_exists("mypy") then
+  table.insert(
+    sources,
+    null_ls.builtins.diagnostics.mypy.with({
+      extra_args = vscode.mypy_args,
+      cwd = function(_) return vim.fn.getcwd() end
+    })
+  )
+end
+
+if util.command_exists("flake8") then
+  table.insert(
+    sources,
+    null_ls.builtins.diagnostics.flake8
+  )
+end
+
+if util.command_exists("eslint") then
+  table.insert(
+    sources,
+    null_ls.builtins.diagnostics.eslint.with({
+      extra_args = vscode.eslint_config_path and { "-c", vscode.eslint_config_path } or {}
+    })
+  )
+end
+
+null_ls.setup({ sources = sources })
