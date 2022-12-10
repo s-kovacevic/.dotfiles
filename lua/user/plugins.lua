@@ -30,62 +30,64 @@ packer.init({
 })
 
 return packer.startup(function(use)
-  use "wbthomason/packer.nvim" -- Have packer manage itself
-  use "nvim-lua/popup.nvim" -- An implementation of the Popup API from vim in Neovim
-  use "nvim-lua/plenary.nvim" -- Useful lua functions used ny lots of plugins
+  use({ "wbthomason/packer.nvim", lock = true }) -- Have packer manage itself
+  use({ "nvim-lua/popup.nvim", lock = true }) -- An implementation of the Popup API from vim in Neovim
+  use({ "nvim-lua/plenary.nvim", lock = true }) -- Useful lua functions used ny lots of plugins
 
   -- Completion
-  use "hrsh7th/nvim-cmp" -- The completion plugin
-  use "hrsh7th/cmp-buffer" -- buffer completions
-  use "hrsh7th/cmp-path" -- path completions
-  use "hrsh7th/cmp-cmdline" -- cmdline completions
-  use "hrsh7th/cmp-nvim-lsp" -- lsp completions
-  use "saadparwaiz1/cmp_luasnip" -- snippet completions
-  use "windwp/nvim-autopairs" -- Autopairs, integrates with both cmp and treesitter
+  use({ "hrsh7th/nvim-cmp", lock = true }) -- The completion plugin
+  use({ "hrsh7th/cmp-buffer", lock = true }) -- buffer completions
+  use({ "hrsh7th/cmp-path", lock = true }) -- path completions
+  use({ "hrsh7th/cmp-cmdline", lock = true }) -- cmdline completions
+  use({ "hrsh7th/cmp-nvim-lsp", lock = true }) -- lsp completions
+  use({ "saadparwaiz1/cmp_luasnip", lock = true }) -- snippet completions
+  use({ "windwp/nvim-autopairs", lock = true }) -- Autopairs, integrates with both cmp and treesitter
 
   -- LSP
-  use "williamboman/mason.nvim" -- simple language server installer
-  use "neovim/nvim-lspconfig" -- configures language server
-  use "williamboman/mason-lspconfig.nvim" -- bridge between nvim-lspconfig and mason
+  use({ "williamboman/mason.nvim", lock = true }) -- simple language server installer
+  use({ "neovim/nvim-lspconfig", lock = true }) -- configures language server
+  use({ "williamboman/mason-lspconfig.nvim", lock = true }) -- bridge between nvim-lspconfig and mason
 
   -- Null LS
   use({
     "jose-elias-alvarez/null-ls.nvim",
+    lock = true,
     requires = { "nvim-lua/plenary.nvim" },
   })
 
   -- Telescope
-  use "nvim-telescope/telescope.nvim"
+  use({ "nvim-telescope/telescope.nvim", lock = true })
 
   -- Treesitter
-  use "nvim-treesitter/nvim-treesitter"
+  use({ "nvim-treesitter/nvim-treesitter", lock = true })
 
   -- Comments
-  use "numToStr/Comment.nvim"
-  use "JoosepAlviste/nvim-ts-context-commentstring"
+  use({ "numToStr/Comment.nvim", lock = true })
+  use({ "JoosepAlviste/nvim-ts-context-commentstring", lock = true })
 
   -- Git
-  use "tpope/vim-fugitive"
-  use "lewis6991/gitsigns.nvim"
+  use({ "tpope/vim-fugitive", lock = true })
+  use({ "lewis6991/gitsigns.nvim", lock = true })
 
   -- File tree sidebar
-  use {
-    'nvim-tree/nvim-tree.lua',
+  use({
+    "nvim-tree/nvim-tree.lua",
+    lock = true,
     requires = {
-      'nvim-tree/nvim-web-devicons', -- optional, for file icons
+      "nvim-tree/nvim-web-devicons", -- optional, for file icons
     },
-  }
+  })
 
   -- Tabs
-  use { 'romgrk/barbar.nvim', wants = 'nvim-web-devicons' }
+  use({ "romgrk/barbar.nvim", lock = true, wants = "nvim-web-devicons" })
 
   -- Snippets
-  use "L3MON4D3/LuaSnip" --snippet engine
-  use "rafamadriz/friendly-snippets" -- a bunch of snippets to use
+  use({ "L3MON4D3/LuaSnip", lock = true }) --snippet engine
+  use({ "rafamadriz/friendly-snippets", lock = true }) -- a bunch of snippets to use
 
   -- Color schemes
-  use "ellisonleao/gruvbox.nvim"
-  use "lunarvim/darkplus.nvim"
+  use({ "ellisonleao/gruvbox.nvim", lock = true })
+  use({ "lunarvim/darkplus.nvim", lock = true })
 
   -- Automatically set up your configuration after cloning packer.nvim
   -- Put this at the end after all plugins
