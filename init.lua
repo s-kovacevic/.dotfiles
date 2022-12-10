@@ -1,5 +1,7 @@
 -- TODO:
+-- Add pytest integration
 -- Check https://github.com/puremourning/vimspector for debugging
+-- Add bandit linter
 -- Check https://github.com/lukas-reineke/indent-blankline.nvim for indentation indicators
 -- Check tpope/vim-fugitive for git things
 -- Check https://github.com/famiu/bufdelete.nvim to stop panels from jumping when closing buffers
@@ -19,4 +21,5 @@ require("user.comment")
 require("user.gitsigns")
 require("user.nvimtree")
 require("user.barbar")
+require("user.null-ls")
 

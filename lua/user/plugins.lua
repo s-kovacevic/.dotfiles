@@ -48,6 +48,12 @@ return packer.startup(function(use)
   use "neovim/nvim-lspconfig" -- configures language server
   use "williamboman/mason-lspconfig.nvim" -- bridge between nvim-lspconfig and mason
 
+  -- Null LS
+  use({
+    "jose-elias-alvarez/null-ls.nvim",
+    requires = { "nvim-lua/plenary.nvim" },
+  })
+
   -- Telescope
   use "nvim-telescope/telescope.nvim"
 
@@ -70,7 +76,7 @@ return packer.startup(function(use)
   }
 
   -- Tabs
-  use {'romgrk/barbar.nvim', wants = 'nvim-web-devicons'}
+  use { 'romgrk/barbar.nvim', wants = 'nvim-web-devicons' }
 
   -- Snippets
   use "L3MON4D3/LuaSnip" --snippet engine
@@ -86,4 +92,3 @@ return packer.startup(function(use)
     require("packer").sync()
   end
 end)
-
