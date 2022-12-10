@@ -34,6 +34,11 @@ return packer.startup(function(use)
   use({ "nvim-lua/popup.nvim", lock = true }) -- An implementation of the Popup API from vim in Neovim
   use({ "nvim-lua/plenary.nvim", lock = true }) -- Useful lua functions used ny lots of plugins
 
+  -- LSP
+  use({ "williamboman/mason.nvim", lock = true }) -- simple language server installer
+  use({ "neovim/nvim-lspconfig", lock = true }) -- configures language server
+  use({ "williamboman/mason-lspconfig.nvim", lock = true }) -- bridge between nvim-lspconfig and mason
+
   -- Completion
   use({ "hrsh7th/nvim-cmp", lock = true }) -- The completion plugin
   use({ "hrsh7th/cmp-buffer", lock = true }) -- buffer completions
@@ -42,11 +47,6 @@ return packer.startup(function(use)
   use({ "hrsh7th/cmp-nvim-lsp", lock = true }) -- lsp completions
   use({ "saadparwaiz1/cmp_luasnip", lock = true }) -- snippet completions
   use({ "windwp/nvim-autopairs", lock = true }) -- Autopairs, integrates with both cmp and treesitter
-
-  -- LSP
-  use({ "williamboman/mason.nvim", lock = true }) -- simple language server installer
-  use({ "neovim/nvim-lspconfig", lock = true }) -- configures language server
-  use({ "williamboman/mason-lspconfig.nvim", lock = true }) -- bridge between nvim-lspconfig and mason
 
   -- Null LS
   use({
@@ -64,6 +64,9 @@ return packer.startup(function(use)
   -- Comments
   use({ "numToStr/Comment.nvim", lock = true })
   use({ "JoosepAlviste/nvim-ts-context-commentstring", lock = true })
+
+  -- Indent indicator
+  use({ "lukas-reineke/indent-blankline.nvim", lock = true })
 
   -- Git
   use({ "tpope/vim-fugitive", lock = true })

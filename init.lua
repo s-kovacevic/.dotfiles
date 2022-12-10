@@ -2,12 +2,9 @@
 -- Add pytest integration
 -- Check https://github.com/puremourning/vimspector for debugging
 -- Add bandit linter
--- Check https://github.com/lukas-reineke/indent-blankline.nvim for indentation indicators
--- Check tpope/vim-fugitive for git things
--- Check https://github.com/famiu/bufdelete.nvim to stop panels from jumping when closing buffers
 -- Check https://github.com/folke/which-key.nvim for help popups
 -- Check https://github.com/goolord/alpha-nvim for startup theme
--- Lock plugin versions, fix how dependencies are managed ( wants = )
+-- Fix how dependencies are managed ( wants = )
 require("user.options")
 require("user.keymaps")
 require("user.plugins")
@@ -23,4 +20,4 @@ require("user.nvimtree")
 require("user.barbar")
 require("user.null-ls")
 require("user.lualine")
-
+require("user.indent-blankline")
