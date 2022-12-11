@@ -40,25 +40,24 @@ M.setup = function()
   })
 end
 
-local function lsp_highlight_document(client)
-  if client.server_capabilities.documentHighlight then
-    print("CAN HIGHLIGHT")
-    vim.api.nvim_exec(
-      [[
-        augroup lsp_document_highlight
-          autocmd! * <buffer>
-          autocmd CursorHold <buffer> lua vim.lsp.buf.document_highlight()
-          autocmd CursorMoved <buffer> lua vim.lsp.buf.clear_references()
-        augroup END
-      ]],
-      false
-    )
-  end
-end
-
 M.on_attach = function(client, bufnr)
   require("user.keymaps").lsp_keymaps(bufnr)
-  lsp_highlight_document(client)
+
+  -- Highlights variables on hold
+  if client.server_capabilities.documentHighlightProvider then
+    local highlight_name = vim.fn.printf("lsp_document_highlight_%d", bufnr)
+    vim.api.nvim_create_augroup(highlight_name, {})
+    vim.api.nvim_create_autocmd({ "CursorHold", "CursorHoldI" }, {
+      group = highlight_name,
+      buffer = bufnr,
+      callback = function() vim.lsp.buf.document_highlight() end,
+    })
+    vim.api.nvim_create_autocmd("CursorMoved", {
+      group = highlight_name,
+      buffer = bufnr,
+      callback = function() vim.lsp.buf.clear_references() end,
+    })
+  end
 end
 
 local capabilities = vim.lsp.protocol.make_client_capabilities()

@@ -1,5 +1,4 @@
 local opts = { noremap = true, silent = true }
-local term_opts = { silent = true }
 
 -- Shorten function name
 local keymap = vim.api.nvim_set_keymap
@@ -28,21 +27,21 @@ keymap("n", "<C-u>", "<C-u>zz", opts)
 keymap("n", "<leader>f", "<cmd>Telescope find_files<cr>", opts)
 keymap("n", "<leader>s", "<cmd>Telescope live_grep<cr>", opts)
 
-vim.cmd [[ command! Format execute 'lua vim.lsp.buf.format({ async = true })' ]]
-keymap("n", "<leader>r", "<cmd>Format<cr>", opts)
+keymap("n", "<leader>n", "<cmd>nohl<cr>", opts)
 
 -- Show file tree
 keymap("n", "<leader>e", ":NvimTreeToggle<cr>", opts)
 
 -- Resize with arrows
-keymap("n", "<C-Up>", ":resize +2<CR>", opts)
-keymap("n", "<C-Down>", ":resize -2<CR>", opts)
-keymap("n", "<C-Left>", ":vertical resize -2<CR>", opts)
-keymap("n", "<C-Right>", ":vertical resize +2<CR>", opts)
+keymap("n", "<S-Up>", ":resize -2<CR>", opts)
+keymap("n", "<S-Down>", ":resize +2<CR>", opts)
+keymap("n", "<S-Left>", ":vertical resize +2<CR>", opts)
+keymap("n", "<S-Right>", ":vertical resize -2<CR>", opts)
 
--- Navigate buffers
+-- Buffers
 keymap("n", "<S-l>", ":BufferNext<CR>", opts)
 keymap("n", "<S-h>", ":BufferPrevious<CR>", opts)
+keymap("n", "<S-x>", ":BufferClose<CR>", opts)
 
 -- Insert --
 keymap("i", "jk", "<ESC>", opts)
@@ -53,25 +52,16 @@ keymap("v", "<", "<gv", opts)
 keymap("v", ">", ">gv", opts)
 
 -- Move text up and down
-keymap("v", "<A-j>", ":m .+1<CR>==", opts)
-keymap("v", "<A-k>", ":m .-2<CR>==", opts)
-keymap("v", "p", '"_dP', opts)
+keymap("v", "<A-j>", ":move .+1<CR>==", opts)
+keymap("v", "<A-k>", ":move .-2<CR>==", opts)
 
 -- Visual Block --
 -- Move text up and down
 keymap("x", "K", ":move '<-2<CR>gv-gv", opts)
 keymap("x", "J", ":move '>+1<CR>gv-gv", opts)
-keymap("x", "<A-j>", ":move '>+1<CR>gv-gv", opts)
-keymap("x", "<A-k>", ":move '<-2<CR>gv-gv", opts)
-
--- Terminal --
--- Better terminal navigation
-keymap("t", "<C-h>", "<C-\\><C-N><C-w>h", term_opts)
-keymap("t", "<C-j>", "<C-\\><C-N><C-w>j", term_opts)
-keymap("t", "<C-k>", "<C-\\><C-N><C-w>k", term_opts)
-keymap("t", "<C-l>", "<C-\\><C-N><C-w>l", term_opts)
 
 -- LSP
+keymap("n", "<leader>r", "<cmd>lua vim.lsp.buf.format({ async = true })<cr>", opts)
 local function lsp_keymaps(bufnr)
   -- Insert
   vim.api.nvim_buf_set_keymap(bufnr, "i", "<C-k>", "<cmd>lua vim.lsp.buf.signature_help()<CR>", opts)
@@ -93,4 +83,3 @@ end
 return {
   lsp_keymaps = lsp_keymaps
 }
-
