@@ -3,11 +3,36 @@ local dap_vscode = require("dap.ext.vscode")
 local dapui = require("dapui")
 local vscode = require("user.vscode")
 
-dap.adapters.python = {
-  type = "executable";
-  command = os.getenv("VIRTUAL_ENV") .. "/bin/python";
-  args = { "-m", "debugpy.adapter" };
-}
+
+-- DAP style
+vim.fn.sign_define("DapBreakpoint", { text = "", texthl = "", linehl = "", numhl = "" })
+vim.fn.sign_define("DapBreakpointCondition", { text = "", texthl = "", linehl = "", numhl = "" })
+vim.fn.sign_define("DapBreakpointRejected", { text = "", texthl = "", linehl = "", numhl = "" })
+vim.fn.sign_define("DapLogPoint", { text = ".>", texthl = "", linehl = "", numhl = "" })
+vim.fn.sign_define("DapStopped", { text = "", texthl = "", linehl = "", numhl = "" })
+
+-- Adapters
+dap.adapters.python = function(cb, config)
+  if config.request == "attach" then
+    cb({
+      type = "server",
+      port = config.port,
+      host = config.host,
+      options = {
+        source_filetype = "python",
+      }
+    })
+  else
+    cb({
+      type = "executable";
+      command = os.getenv("VIRTUAL_ENV") .. "/bin/python";
+      args = { "-m", "debugpy.adapter" };
+      options = {
+        source_filetype = "python",
+      }
+    })
+  end
+end
 
 if vscode.launch_file_exists() then
   dap_vscode.load_launchjs()
@@ -22,6 +47,7 @@ else
   }
 end
 
+-- DAP UI
 require("dapui").setup({
   icons = { expanded = "", collapsed = "", current_frame = "" },
   mappings = {
