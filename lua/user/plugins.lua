@@ -64,6 +64,9 @@ return packer.startup(function(use)
   -- Treesitter
   use({ "nvim-treesitter/nvim-treesitter", lock = true })
 
+  -- Which-Key
+  use({ "folke/which-key.nvim", commit = "61553ae" })
+
   -- Comments
   use({ "numToStr/Comment.nvim", lock = true })
   use({ "JoosepAlviste/nvim-ts-context-commentstring", lock = true })
@@ -97,6 +100,7 @@ return packer.startup(function(use)
   -- Color schemes
   use({ "ellisonleao/gruvbox.nvim", lock = true })
   use({ "lunarvim/darkplus.nvim", lock = true })
+  use({ "Mofiqul/dracula.nvim", commit = "3fef2dd" })
 
   -- Automatically set up your configuration after cloning packer.nvim
   -- Put this at the end after all plugins

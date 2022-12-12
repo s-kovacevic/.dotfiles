@@ -1,5 +1,6 @@
-local opts = { noremap = true, silent = true }
+local which_key = require("which-key")
 
+local opts = { noremap = true, silent = true }
 -- Shorten function name
 local keymap = vim.api.nvim_set_keymap
 
@@ -79,6 +80,114 @@ local function lsp_keymaps(bufnr)
   vim.api.nvim_buf_set_keymap(bufnr, "n", "gl", '<cmd>lua vim.diagnostic.open_float({ border = "rounded" })<CR>', opts)
   vim.api.nvim_buf_set_keymap(bufnr, "n", "<leader>q", "<cmd>lua vim.diagnostic.setloclist()<CR>", opts)
 end
+
+local sections = {
+  n = {
+    ["<Leader>"] = {
+      g = { name = "Git" },
+      l = { name = "LSP" },
+      d = { name = "Debugger" },
+      s = { name = "Search" },
+      c = { name = "Comment" }
+    }
+  }
+}
+which_key.register({
+  ["<Leader>"] = {
+    g = {
+      name = "Git",
+      s = { "<cmd>:Git<cr>", name = "Status" },
+      w = { "<cmd>:Gwrite<cr>", name = "Stage current file" },
+      r = { "<cmd>:GRead<cr>", name = "Revert current file" },
+      h = {
+        name = "+Hunk",
+        r = "Revert",
+        s = "Stage",
+      }
+    }
+  }
+})
+-- Lgs - Git equivalent
+-- Lgw - Gwrite
+-- Lgr - Gread
+-- Lgc - Gcommit
+-- Lghr - Hunk reset
+-- Lghs - Hunk stage
+-- Lghn - Hunk next
+-- Lghp - Hunk previous
+-- Lgd - Diff
+-- Lgb - Blame line
+
+which_key.register({
+  ["<Leader>"] = {
+    d = {
+      name = "Debug",
+      t = { "<cmd>lua require('dap').toggle()<CR>", "Toggle breakpoint" },
+      s = {
+        name = "+step",
+        c = { "<cmd>lua require('dap').continue()<CR>", "Continue" },
+        v = { "<cmd>lua require('dap').step_over()<CR>", "Step Over" },
+        i = { "<cmd>lua require('dap').step_into()<CR>", "Step Into" },
+        o = { "<cmd>lua require('dap').step_out()<CR>", "Step Out" },
+      },
+      h = {
+        name = "+hover",
+        h = { "<cmd>lua require('dap.ui.variables').hover()<CR>", "Hover" },
+        v = { "<cmd>lua require('dap.ui.variables').visual_hover()<CR>", "Visual Hover" },
+      },
+      u = {
+        name = "+UI",
+        h = { "<cmd>lua require('dap.ui.widgets').hover()<CR>", "Hover" },
+        f = { "local widgets=require('dap.ui.widgets');widgets.centered_float(widgets.scopes)<CR>", "Float" },
+      },
+      r = {
+        name = "+repl",
+        o = { "<cmd>lua require('dap').repl.open()<CR>", "Open" },
+        l = { "<cmd>lua require('dap').repl.run_last()<CR>", "Run Last" },
+      },
+      b = {
+        name = "+breakpoints",
+        t = { "<cmd>lua require('dap').toggle_breakpoint()<CR>", "Toggle" },
+        c = {
+          "<cmd>lua require('dap').set_breakpoint(vim.fn.input('Breakpoint condition: '))<CR>",
+          "Breakpoint Condition",
+        },
+        m = {
+          "<cmd>lua require('dap').set_breakpoint({ nil, nil, vim.fn.input('Log point message: ') })<CR>",
+          "Log Point Message",
+        },
+      },
+      c = { "<cmd>lua require('dap').scopes()<CR>", "Scopes" },
+    },
+  }
+})
+--     nnoremap <silent> <F5> <Cmd>lua require'dap'.continue()<CR>
+--[[ nnoremap <silent> <F10> <Cmd>lua require'dap'.step_over()<CR> ]]
+--[[ nnoremap <silent> <F11> <Cmd>lua require'dap'.step_into()<CR> ]]
+--[[ nnoremap <silent> <F12> <Cmd>lua require'dap'.step_out()<CR> ]]
+--[[ nnoremap <silent> <Leader>b <Cmd>lua require'dap'.toggle_breakpoint()<CR> ]]
+--[[ nnoremap <silent> <Leader>B <Cmd>lua require'dap'.set_breakpoint(vim.fn.input('Breakpoint condition: '))<CR> ]]
+--[[ nnoremap <silent> <Leader>lp <Cmd>lua require'dap'.set_breakpoint(nil, nil, vim.fn.input('Log point message: '))<CR> ]]
+--[[ nnoremap <silent> <Leader>dr <Cmd>lua require'dap'.repl.open()<CR> ]]
+--[[ nnoremap <silent> <Leader>dl <Cmd>lua require'dap'.run_last()<CR> ]]
+-- Lda - debugger attach
+-- Ldb - toggle breakpoint
+-- Ldc - debug console
+
+-- Lls - signature help
+-- Lld - go to definition
+-- LlD - go to declaration
+-- Llh - hover
+-- Llr - rename
+-- Llc - code action
+-- Llp - previous diagnostic
+-- Lln - next diagnostic
+-- Llf - open float
+-- Llq - setloclist diagnostic
+
+-- Lcc - toggle comment
+-- Lcb - toggle block comment
+-- C+/ - toggle comment
 
 return {
   lsp_keymaps = lsp_keymaps

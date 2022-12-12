@@ -2,10 +2,10 @@
 -- Add pytest integration
 -- Check https://github.com/puremourning/vimspector for debugging
 -- Add bandit linter
--- Check https://github.com/folke/which-key.nvim for help popups
 -- Check https://github.com/goolord/alpha-nvim for startup theme
 -- Fix how dependencies are managed ( wants = )
 require("user.options")
+require("user.which-key")
 require("user.keymaps")
 require("user.plugins")
 require("user.colorscheme")

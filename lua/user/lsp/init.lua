@@ -3,6 +3,7 @@ local servers = {
   "tsserver",
 	"pyright",
 	"jsonls",
+  "yamlls",
   "gopls",
 }
 
@@ -30,10 +31,8 @@ require("mason").setup({
 require("mason-lspconfig").setup()
 require("user.lsp.handlers").setup()
 
-local opts = {}
-
 for _, server in pairs(servers) do
-	opts = {
+	local opts = {
 		on_attach = require("user.lsp.handlers").on_attach,
 		capabilities = require("user.lsp.handlers").capabilities,
 	}
@@ -44,6 +43,6 @@ for _, server in pairs(servers) do
 	if require_ok then
 		opts = vim.tbl_deep_extend("force", conf_opts, opts)
 	end
-  require('lspconfig')[server].setup(opts)
+  require("lspconfig")[server].setup(opts)
 end
 

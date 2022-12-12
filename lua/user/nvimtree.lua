@@ -1,14 +1,20 @@
-local status_ok, nvim_tree = pcall(require, "nvim-tree")
-if not status_ok then
-  return
+local nvim_tree = require("nvim-tree")
+local nvim_tree_api = require("nvim-tree.api")
+
+-- Callbacks that close sidebar after picking file
+local function edit_and_close(node)
+  nvim_tree_api.node.open.edit()
+  if node.type == "file" then
+    nvim_tree_api.tree.close()
+  end
 end
 
-local config_status_ok, nvim_tree_config = pcall(require, "nvim-tree.config")
-if not config_status_ok then
-  return
+local function vsplit_and_close(node)
+  nvim_tree_api.node.open.vertical()
+  if node.type == "file" then
+    nvim_tree_api.tree.close()
+  end
 end
-
-local nvimtree_callback = nvim_tree_config.nvim_tree_callback
 
 nvim_tree.setup({
   disable_netrw = true,
@@ -52,9 +58,10 @@ nvim_tree.setup({
     mappings = {
       custom_only = false,
       list = {
-        { key = { "l", "<CR>", "o" }, cb = nvimtree_callback("edit") },
-        { key = "h", cb = nvimtree_callback("close_node") },
-        { key = "v", cb = nvimtree_callback("vsplit") },
+        { key = { "l", "<CR>" }, action = "edit_and_close", action_cb = edit_and_close },
+        { key = "O", action = "edit" },
+        { key = "h", action = "close_node" },
+        { key = "v", action = "vsplit_and_close", action_cb = vsplit_and_close },
       },
     },
     number = false,
