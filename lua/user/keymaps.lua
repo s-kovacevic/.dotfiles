@@ -73,7 +73,8 @@ local function lsp_keymaps(bufnr)
   vim.api.nvim_buf_set_keymap(bufnr, "n", "gi", "<cmd>lua vim.lsp.buf.implementation()<CR>", opts)
   vim.api.nvim_buf_set_keymap(bufnr, "n", "<C-k>", "<cmd>lua vim.lsp.buf.signature_help()<CR>", opts)
   vim.api.nvim_buf_set_keymap(bufnr, "n", "<leader>rn", "<cmd>lua vim.lsp.buf.rename()<CR>", opts)
-  vim.api.nvim_buf_set_keymap(bufnr, "n", "gr", "<cmd>lua vim.lsp.buf.references()<CR>", opts)
+  vim.api.nvim_buf_set_keymap(bufnr, "n", "gR", "<cmd>lua vim.lsp.buf.references()<CR>", opts)
+  vim.api.nvim_buf_set_keymap(bufnr, "n", "gr", "<cmd>Telescope lsp_references<CR>", opts)
   vim.api.nvim_buf_set_keymap(bufnr, "n", "<leader>ca", "<cmd>lua vim.lsp.buf.code_action()<CR>", opts)
   vim.api.nvim_buf_set_keymap(bufnr, "n", "[d", '<cmd>lua vim.diagnostic.goto_prev({ border = "rounded" })<CR>', opts)
   vim.api.nvim_buf_set_keymap(bufnr, "n", "]d", '<cmd>lua vim.diagnostic.goto_next({ border = "rounded" })<CR>', opts)
@@ -96,27 +97,24 @@ which_key.register({
   ["<Leader>"] = {
     g = {
       name = "Git",
-      s = { "<cmd>:Git<cr>", name = "Status" },
-      w = { "<cmd>:Gwrite<cr>", name = "Stage current file" },
-      r = { "<cmd>:GRead<cr>", name = "Revert current file" },
+      s = { "<cmd>:Git<cr>", "Status" },
+      w = { "<cmd>:Gwrite<cr>", "Stage current file" },
+      r = { "<cmd>:GRead<cr>", "Revert current file" },
+      t = { "<cmd>lua require('gitsigns').toggle_current_line_blame()<cr>", "Toggle Inline Blame" },
       h = {
         name = "+Hunk",
-        r = "Revert",
-        s = "Stage",
+        n = { "<cmd>lua require('gitsigns').next_hunk()<cr>", "Next" },
+        p = { "<cmd>lua require('gitsigns').prev_hunk()<cr>", "Previous" },
+        v = { "<cmd>lua require('gitsigns').preview_hunk()<cr>", "Preview" },
+        r = { "<cmd>lua require('gitsigns').reset_hunk()<cr>", "Revert" },
+        s = { "<cmd>lua require('gitsigns').stage_hunk()<cr>", "Stage" },
+        d = { "<cmd>lua require('gitsigns').diffthis()<cr>", "Diff" },
+        u = { "<cmd>lua require('gitsigns').undo_stage_hunk()<cr>", "Undo Stage" },
+        b = { "<cmd>lua require('gitsigns').blame_line({ full = true })<cr>", "Blame Line" },
       }
     }
   }
 })
--- Lgs - Git equivalent
--- Lgw - Gwrite
--- Lgr - Gread
--- Lgc - Gcommit
--- Lghr - Hunk reset
--- Lghs - Hunk stage
--- Lghn - Hunk next
--- Lghp - Hunk previous
--- Lgd - Diff
--- Lgb - Blame line
 
 which_key.register({
   ["<Leader>"] = {
@@ -124,14 +122,14 @@ which_key.register({
       name = "Debug",
       t = { "<cmd>lua require('dap').toggle()<CR>", "Toggle breakpoint" },
       s = {
-        name = "+step",
+        name = "+Step",
         c = { "<cmd>lua require('dap').continue()<CR>", "Continue" },
         v = { "<cmd>lua require('dap').step_over()<CR>", "Step Over" },
         i = { "<cmd>lua require('dap').step_into()<CR>", "Step Into" },
         o = { "<cmd>lua require('dap').step_out()<CR>", "Step Out" },
       },
       h = {
-        name = "+hover",
+        name = "+Hover",
         h = { "<cmd>lua require('dap.ui.variables').hover()<CR>", "Hover" },
         v = { "<cmd>lua require('dap.ui.variables').visual_hover()<CR>", "Visual Hover" },
       },
@@ -141,12 +139,12 @@ which_key.register({
         f = { "local widgets=require('dap.ui.widgets');widgets.centered_float(widgets.scopes)<CR>", "Float" },
       },
       r = {
-        name = "+repl",
+        name = "+Repl",
         o = { "<cmd>lua require('dap').repl.open()<CR>", "Open" },
         l = { "<cmd>lua require('dap').repl.run_last()<CR>", "Run Last" },
       },
       b = {
-        name = "+breakpoints",
+        name = "+Breakpoints",
         t = { "<cmd>lua require('dap').toggle_breakpoint()<CR>", "Toggle" },
         c = {
           "<cmd>lua require('dap').set_breakpoint(vim.fn.input('Breakpoint condition: '))<CR>",

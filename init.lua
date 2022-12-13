@@ -1,6 +1,5 @@
 -- TODO:
 -- Add pytest integration
--- Check https://github.com/puremourning/vimspector for debugging
 -- Add bandit linter
 -- Check https://github.com/goolord/alpha-nvim for startup theme
 -- Fix how dependencies are managed ( wants = )
