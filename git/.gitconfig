@@ -1,0 +1,10 @@
+[user]
+	name = Savo Kovacevic
+	email = savo.s.kovacevic@gmail.com
+
+[core]
+  excludesfile = ~/.gitignore
+	editor = nvim
+
+[init]
+	defaultBranch = master

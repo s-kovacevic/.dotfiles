@@ -21,4 +21,3 @@ require("user.null-ls")
 require("user.lualine")
 require("user.indent-blankline")
 require("user.debugging")
-

@@ -1,2 +1,3 @@
 packer_compiled.lua
-
+shell/.secrets
+.DS_Store
