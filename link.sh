@@ -1,4 +1,5 @@
 #!/bin/bash
 
-ln -sf ~/.dotfiles/nvim/ ~/.config/nvim
+ln -sfh ~/.dotfiles/nvim/ ~/.config/nvim
+ln -sfh ~/.dotfiles/alacritty/ ~/.config/alacritty
 
