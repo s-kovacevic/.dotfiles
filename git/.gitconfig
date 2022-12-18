@@ -3,7 +3,7 @@
 	email = savo.s.kovacevic@gmail.com
 
 [core]
-  excludesfile = ~/.gitignore
+	excludesfile = ~/.gitignore
 	editor = nvim
 
 [init]
