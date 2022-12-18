@@ -25,6 +25,12 @@ keymap("n", "<C-k>", "<C-w>k", opts)
 keymap("n", "<C-l>", "<C-w>l", opts)
 keymap("n", "<C-d>", "<C-d>zz", opts)
 keymap("n", "<C-u>", "<C-u>zz", opts)
+
+-- Sessionizer
+keymap("n", "<C-f>", "<cmd>silent !tmux neww tmux-sessionizer<cr>", opts)
+
+-- Copies to OS clipboard
+keymap("n", "<leader>y", "\"+y", opts)
 keymap("n", "<leader>f", "<cmd>Telescope find_files<cr>", opts)
 keymap("n", "<leader>s", "<cmd>Telescope live_grep<cr>", opts)
 
@@ -60,6 +66,13 @@ keymap("v", "<A-k>", ":move .-2<CR>==", opts)
 -- Move text up and down
 keymap("x", "K", ":move '<-2<CR>gv-gv", opts)
 keymap("x", "J", ":move '>+1<CR>gv-gv", opts)
+
+-- Copies to OS clipboard
+keymap("v", "<leader>y", "\"+y", opts)
+keymap("v", "<leader>Y", "\"+Y", opts)
+keymap("x", "<leader>y", "\"+y", opts)
+keymap("x", "<leader>Y", "\"+Y", opts)
+
 
 -- LSP
 keymap("n", "<leader>r", "<cmd>lua vim.lsp.buf.format({ async = true })<cr>", opts)
@@ -116,11 +129,13 @@ which_key.register({
   }
 })
 
+-- Debugging
 which_key.register({
   ["<Leader>"] = {
     d = {
       name = "Debug",
-      t = { "<cmd>lua require('dap').toggle()<CR>", "Toggle breakpoint" },
+      t = { "<cmd>lua require('dap').toggle_breakpoint()<CR>", "Toggle breakpoint" },
+      S = { "<cmd>lua require('dap').continue()<CR>", "Start debugging"},
       s = {
         name = "+Step",
         c = { "<cmd>lua require('dap').continue()<CR>", "Continue" },
@@ -159,18 +174,12 @@ which_key.register({
     },
   }
 })
---     nnoremap <silent> <F5> <Cmd>lua require'dap'.continue()<CR>
---[[ nnoremap <silent> <F10> <Cmd>lua require'dap'.step_over()<CR> ]]
---[[ nnoremap <silent> <F11> <Cmd>lua require'dap'.step_into()<CR> ]]
---[[ nnoremap <silent> <F12> <Cmd>lua require'dap'.step_out()<CR> ]]
---[[ nnoremap <silent> <Leader>b <Cmd>lua require'dap'.toggle_breakpoint()<CR> ]]
---[[ nnoremap <silent> <Leader>B <Cmd>lua require'dap'.set_breakpoint(vim.fn.input('Breakpoint condition: '))<CR> ]]
---[[ nnoremap <silent> <Leader>lp <Cmd>lua require'dap'.set_breakpoint(nil, nil, vim.fn.input('Log point message: '))<CR> ]]
---[[ nnoremap <silent> <Leader>dr <Cmd>lua require'dap'.repl.open()<CR> ]]
---[[ nnoremap <silent> <Leader>dl <Cmd>lua require'dap'.run_last()<CR> ]]
--- Lda - debugger attach
--- Ldb - toggle breakpoint
--- Ldc - debug console
+keymap("n", "<F4>", "<cmd>lua require('dap').toggle_breakpoint()<CR>", opts)
+keymap("n", "<F5>", "<cmd>lua require('dap').continue()<CR>", opts)
+keymap("n", "<F6>", "<cmd>lua require('dap').step_over()<CR>", opts)
+keymap("n", "<F7>", "<cmd>lua require('dap').step_into()<CR>", opts)
+keymap("n", "<F8>", "<cmd>lua require('dap').step_out()<CR>", opts)
+keymap("n", "<F9>", "<cmd>lua require('dap').repl.open()<CR>", opts)
 
 -- Lls - signature help
 -- Lld - go to definition

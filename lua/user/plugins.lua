@@ -56,7 +56,7 @@ return packer.startup(function(use)
   })
   -- Debugging
   use({ "mfussenegger/nvim-dap", tag = "0.3.0" })
-  use({ "rcarriga/nvim-dap-ui", tag = "v2.6.0" })
+  use({ "theHamsta/nvim-dap-virtual-text", commit = "2971ce3" })
 
   -- Telescope
   use({ "nvim-telescope/telescope.nvim", lock = true })
