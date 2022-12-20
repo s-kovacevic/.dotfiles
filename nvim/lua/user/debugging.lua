@@ -63,3 +63,11 @@ require("nvim-dap-virtual-text").setup({
   virt_text_win_col = nil -- position the virtual text at a fixed window column (starting from the first text column) ,
   -- e.g. 80 to position at column 80, see `:h nvim_buf_set_extmark()`
 })
+
+-- After debugging is finished, remove existing virtual text
+dap.listeners.before.event_terminated["clear_virtual_text"] = function()
+  require("nvim-dap-virtual-text").refresh()
+end
+dap.listeners.before.event_exited["clear_virtual_text"] = function()
+  require("nvim-dap-virtual-text").refresh()
+end
