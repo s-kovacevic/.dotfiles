@@ -9,14 +9,6 @@ keymap("", "<Space>", "<Nop>", opts)
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
 
--- Modes
---   normal_mode = "n",
---   insert_mode = "i",
---   visual_mode = "v",
---   visual_block_mode = "x",
---   term_mode = "t",
---   command_mode = "c",
-
 -- Normal --
 -- Better window navigation
 keymap("n", "<C-h>", "<C-w>h", opts)
@@ -25,9 +17,6 @@ keymap("n", "<C-k>", "<C-w>k", opts)
 keymap("n", "<C-l>", "<C-w>l", opts)
 keymap("n", "<C-d>", "<C-d>zz", opts)
 keymap("n", "<C-u>", "<C-u>zz", opts)
-
--- Sessionizer
-keymap("n", "<C-f>", "<cmd>silent !tmux neww tmux-sessionizer<cr>", opts)
 
 -- Copies to OS clipboard
 keymap("n", "<leader>y", "\"+y", opts)
@@ -174,6 +163,7 @@ which_key.register({
     },
   }
 })
+keymap("n", "<F3>", "<cmd>lua require('dap').terminate()<CR>", opts)
 keymap("n", "<F4>", "<cmd>lua require('dap').toggle_breakpoint()<CR>", opts)
 keymap("n", "<F5>", "<cmd>lua require('dap').continue()<CR>", opts)
 keymap("n", "<F6>", "<cmd>lua require('dap').step_over()<CR>", opts)
