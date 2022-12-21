@@ -83,12 +83,12 @@ function kubectlDescribeSecret() {
 # Aliases
 alias hgrep=grepHistory
 alias kc=kubectl
-alias kclogs=kubectLogs
+alias kclogs=kubectlLogs
 alias kcx=kubectlExec
 alias kcdescribe=kubectlDescribeResources
 alias kcsecret=kubectlDescribeSecret
 alias kcctx=kubectlSetContext
-alias dx=execDockerContainer
+alias dx=dockerExecContainer
 alias dk='docker'
 alias dc='docker-compose'
 alias dcd='docker-compose down'
