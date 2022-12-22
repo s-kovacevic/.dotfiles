@@ -82,6 +82,7 @@ function kubectlDescribeSecret() {
 
 # Aliases
 alias hgrep=grepHistory
+alias kc=kubectl
 alias kclogs=kubectlLogs
 alias kcx=kubectlExec
 alias kcdescribe=kubectlDescribeResources
