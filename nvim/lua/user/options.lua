@@ -22,8 +22,7 @@ vim.opt.undofile = true                         -- enable persistent undo betwee
 vim.opt.updatetime = 300                        -- faster completion (4000ms default)
 vim.opt.writebackup = false                     -- if a file is being edited by another program (or was written to file while editing with another program), it is not allowed to be edited
 vim.opt.expandtab = true                        -- convert tabs to spaces
-vim.opt.shiftwidth = 2                          -- the number of spaces inserted for each indentation
-vim.cmd [[autocmd Filetype python setlocal tabstop=4]] -- set tab size in python files
+vim.opt.shiftwidth = 0                          -- the number of spaces inserted for each indentation (if 0, defaults to tabstop)
 vim.opt.tabstop = 2                             -- insert 2 spaces for a tab
 vim.opt.cursorline = true                       -- highlight the current line
 vim.opt.number = true                           -- set numbered lines
@@ -42,6 +41,7 @@ vim.cmd [[set iskeyword+=-]]
 -- See `:help vim.highlight.on_yank()`
 local highlight_group = vim.api.nvim_create_augroup("YankHighlight", { clear = true })
 vim.api.nvim_create_autocmd("TextYankPost", {
+  desc = "Highlights yanked text",
   callback = function()
     vim.highlight.on_yank()
   end,
@@ -49,3 +49,20 @@ vim.api.nvim_create_autocmd("TextYankPost", {
   pattern = "*",
 })
 
+vim.api.nvim_create_autocmd("FileType", {
+  desc = "Sets python specific buffer settings",
+  pattern = "python",
+  callback = function ()
+   vim.opt_local.tabstop = 4
+  end,
+})
+
+vim.api.nvim_create_autocmd("FileType", {
+  desc = "Sets golang specific buffer settings",
+  pattern = "go",
+  callback = function ()
+   vim.opt_local.expandtab = false
+   vim.opt_local.softtabstop = 4
+   vim.opt_local.tabstop = 4
+  end,
+})

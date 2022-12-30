@@ -101,7 +101,8 @@ return packer.startup(function(use)
   use({ "ellisonleao/gruvbox.nvim", lock = true })
   use({ "lunarvim/darkplus.nvim", lock = true })
   use({ "Mofiqul/dracula.nvim", commit = "3fef2dd" })
-
+  use({ "folke/tokyonight.nvim", commit = "2c2287d" })
+  use({ "rebelot/kanagawa.nvim", commit = "fb733c1" })
   -- Automatically set up your configuration after cloning packer.nvim
   -- Put this at the end after all plugins
   if PACKER_BOOTSTRAP then
