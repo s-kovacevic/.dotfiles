@@ -43,19 +43,20 @@ end
 M.on_attach = function(client, bufnr)
   require("user.keymaps").lsp_keymaps(bufnr)
 
-  -- Highlights variables on hold
   if client.server_capabilities.documentHighlightProvider then
-    local highlight_name = vim.fn.printf("lsp_document_highlight_%d", bufnr)
-    vim.api.nvim_create_augroup(highlight_name, {})
-    vim.api.nvim_create_autocmd({ "CursorHold", "CursorHoldI" }, {
-      group = highlight_name,
+    vim.api.nvim_create_augroup("lsp_document_highlight", { clear = true })
+    vim.api.nvim_clear_autocmds { buffer = bufnr, group = "lsp_document_highlight" }
+    vim.api.nvim_create_autocmd("CursorHold", {
+      callback = vim.lsp.buf.document_highlight,
       buffer = bufnr,
-      callback = function() vim.lsp.buf.document_highlight() end,
+      group = "lsp_document_highlight",
+      desc = "Document Highlight",
     })
     vim.api.nvim_create_autocmd("CursorMoved", {
-      group = highlight_name,
+      callback = vim.lsp.buf.clear_references,
       buffer = bufnr,
-      callback = function() vim.lsp.buf.clear_references() end,
+      group = "lsp_document_highlight",
+      desc = "Clear All the References",
     })
   end
 end

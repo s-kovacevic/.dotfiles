@@ -1,8 +1,8 @@
 -- TODO:
 -- Add pytest integration
 -- Add bandit linter
--- Check https://github.com/goolord/alpha-nvim for startup theme
 -- Fix how dependencies are managed ( wants = )
+-- Fix keybinds
 require("user.options")
 require("user.which-key")
 require("user.keymaps")
