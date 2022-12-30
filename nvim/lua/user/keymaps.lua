@@ -1,87 +1,91 @@
 local which_key = require("which-key")
 
-local opts = { noremap = true, silent = true }
-local keymap = vim.api.nvim_set_keymap
+local function map(mode, l, r, override_opts)
+  local opts = { noremap = true, silent = true }
+  if override_opts ~= nil then
+    for key, value in pairs(override_opts) do
+      opts[key] = value
+    end
+  end
+  vim.keymap.set(mode, l, r, opts)
+end
 
---Remap space as leader key
-keymap("", "<Space>", "<Nop>", opts)
+map("", "<Space>", "<Nop>")
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
 
 -- Better window navigation
-keymap("n", "<C-h>", "<C-w>h", opts)
-keymap("n", "<C-j>", "<C-w>j", opts)
-keymap("n", "<C-k>", "<C-w>k", opts)
-keymap("n", "<C-l>", "<C-w>l", opts)
-keymap("n", "<C-d>", "<C-d>zz", opts)
-keymap("n", "<C-u>", "<C-u>zz", opts)
+map("n", "<C-h>", "<C-w>h")
+map("n", "<C-j>", "<C-w>j")
+map("n", "<C-k>", "<C-w>k")
+map("n", "<C-l>", "<C-w>l")
+map("n", "<C-d>", "<C-d>zz")
+map("n", "<C-u>", "<C-u>zz")
 
--- Copies to OS clipboard
-keymap("n", "<leader>y", "\"+y", opts)
+map("n", "<leader>f", "<cmd>Telescope find_files<cr>")
+map("n", "<leader>s", "<cmd>Telescope live_grep<cr>")
+map("n", "<leader>S", "<cmd>Telescope grep_string<cr>")
 
-keymap("n", "<leader>f", "<cmd>Telescope find_files<cr>", opts)
-keymap("n", "<leader>s", "<cmd>Telescope live_grep<cr>", opts)
-keymap("n", "<leader>S", "<cmd>Telescope grep_string<cr>", opts)
-
-keymap("n", "<leader>n", "<cmd>nohl<cr>", opts)
+map("n", "<leader>n", "<cmd>nohl<cr>")
 
 -- Show file tree
-keymap("n", "<leader>e", ":NvimTreeToggle<cr>", opts)
+map("n", "<leader>e", ":NvimTreeToggle<cr>")
 
 -- Resize with arrows
-keymap("n", "<S-Up>", ":resize -2<CR>", opts)
-keymap("n", "<S-Down>", ":resize +2<CR>", opts)
-keymap("n", "<S-Left>", ":vertical resize +2<CR>", opts)
-keymap("n", "<S-Right>", ":vertical resize -2<CR>", opts)
+map("n", "<S-Up>", ":resize -2<cr>")
+map("n", "<S-Down>", ":resize +2<cr>")
+map("n", "<S-Left>", ":vertical resize +2<cr>")
+map("n", "<S-Right>", ":vertical resize -2<cr>")
 
 -- Buffers
-keymap("n", "<S-l>", ":BufferNext<CR>", opts)
-keymap("n", "<S-h>", ":BufferPrevious<CR>", opts)
-keymap("n", "<S-x>", ":BufferClose<CR>", opts)
+map("n", "<S-l>", ":BufferNext<cr>")
+map("n", "<S-h>", ":BufferPrevious<cr>")
+map("n", "<S-x>", ":BufferClose<cr>")
 
-keymap("i", "jk", "<ESC>", opts)
+map("i", "jk", "<ESC>")
 
 -- Stay in indent mode
-keymap("v", "<", "<gv", opts)
-keymap("v", ">", ">gv", opts)
+map("v", "<", "<gv")
+map("v", ">", ">gv")
 
 -- Move text up and down
-keymap("v", "<A-j>", ":move .+1<CR>==", opts)
-keymap("v", "<A-k>", ":move .-2<CR>==", opts)
+map("v", "<A-j>", ":move .+1<cr>==")
+map("v", "<A-k>", ":move .-2<cr>==")
 
 -- Move text up and down
-keymap("x", "K", ":move '<-2<CR>gv-gv", opts)
-keymap("x", "J", ":move '>+1<CR>gv-gv", opts)
+map("x", "K", ":move '<-2<cr>gv-gv")
+map("x", "J", ":move '>+1<cr>gv-gv")
 
 -- Copies to OS clipboard
-keymap("v", "<leader>y", "\"+y", opts)
-keymap("v", "<leader>Y", "\"+Y", opts)
+map({ "v", "n" }, "<leader>y", "\"+y")
+map({ "v", "n" }, "<leader>Y", "\"+Y")
 
 -- Replace text but dont replace default register
-keymap("x", "<leader>p", '"_dP', opts)
+map("x", "<leader>p", '"_dP')
 
 -- Start replace in file with word under cursor
-keymap("n", "<leader>R", ":%s/<C-r><C-w>/<C-r><C-w>/gI<Left><Left><Left>", { noremap = true, silent = false })
-keymap("n", "<leader>F", ":/<C-r><C-w><CR>", { noremap = true, silent = false })
+map("n", "<leader>R", ":%s/<C-r><C-w>/<C-r><C-w>/gI<Left><Left><Left>", { silent = false })
+map("n", "<leader>F", ":/<C-r><C-w><cr>", { silent = false })
 
 
 -- LSP
-keymap("n", "<leader>r", "<cmd>lua vim.lsp.buf.format({ async = true })<cr>", opts)
+map("n", "<leader>r", "<cmd>lua vim.lsp.buf.format({ async = true })<cr>")
 local function lsp_keymaps(bufnr)
-  vim.api.nvim_buf_set_keymap(bufnr, "i", "<C-k>", "<cmd>lua vim.lsp.buf.signature_help()<CR>", opts)
-  vim.api.nvim_buf_set_keymap(bufnr, "n", "gD", "<cmd>lua vim.lsp.buf.declaration()<CR>", opts)
-  vim.api.nvim_buf_set_keymap(bufnr, "n", "gd", "<cmd>lua vim.lsp.buf.definition()<CR>", opts)
-  vim.api.nvim_buf_set_keymap(bufnr, "n", "K", "<cmd>lua vim.lsp.buf.hover()<CR>", opts)
-  vim.api.nvim_buf_set_keymap(bufnr, "n", "gi", "<cmd>lua vim.lsp.buf.implementation()<CR>", opts)
-  vim.api.nvim_buf_set_keymap(bufnr, "n", "<C-k>", "<cmd>lua vim.lsp.buf.signature_help()<CR>", opts)
-  vim.api.nvim_buf_set_keymap(bufnr, "n", "<leader>rn", "<cmd>lua vim.lsp.buf.rename()<CR>", opts)
-  vim.api.nvim_buf_set_keymap(bufnr, "n", "gR", "<cmd>lua vim.lsp.buf.references()<CR>", opts)
-  vim.api.nvim_buf_set_keymap(bufnr, "n", "gr", "<cmd>Telescope lsp_references<CR>", opts)
-  vim.api.nvim_buf_set_keymap(bufnr, "n", "ga", "<cmd>lua vim.lsp.buf.code_action()<CR>", opts)
-  vim.api.nvim_buf_set_keymap(bufnr, "n", "[d", '<cmd>lua vim.diagnostic.goto_prev({ border = "rounded" })<CR>', opts)
-  vim.api.nvim_buf_set_keymap(bufnr, "n", "]d", '<cmd>lua vim.diagnostic.goto_next({ border = "rounded" })<CR>', opts)
-  vim.api.nvim_buf_set_keymap(bufnr, "n", "gl", '<cmd>lua vim.diagnostic.open_float({ border = "rounded" })<CR>', opts)
-  vim.api.nvim_buf_set_keymap(bufnr, "n", "<leader>q", "<cmd>lua vim.diagnostic.setloclist()<CR>", opts)
+  local bufopt = { buffer = bufnr }
+  map("i", "<C-k>", "<cmd>lua vim.lsp.buf.signature_help()<cr>", bufopt)
+  map("n", "gD", "<cmd>lua vim.lsp.buf.declaration()<cr>", bufopt)
+  map("n", "gd", "<cmd>lua vim.lsp.buf.definition()<cr>", bufopt)
+  map("n", "K", "<cmd>lua vim.lsp.buf.hover()<cr>", bufopt)
+  map("n", "gi", "<cmd>lua vim.lsp.buf.implementation()<cr>", bufopt)
+  map("n", "<C-k>", "<cmd>lua vim.lsp.buf.signature_help()<cr>", bufopt)
+  map("n", "<leader>rn", "<cmd>lua vim.lsp.buf.rename()<cr>", bufopt)
+  map("n", "gR", "<cmd>lua vim.lsp.buf.references()<cr>", bufopt)
+  map("n", "gr", "<cmd>Telescope lsp_references<cr>", bufopt)
+  map("n", "ga", "<cmd>lua vim.lsp.buf.code_action()<cr>", bufopt)
+  map("n", "[d", '<cmd>lua vim.diagnostic.goto_prev({ border = "rounded" })<cr>', bufopt)
+  map("n", "]d", '<cmd>lua vim.diagnostic.goto_next({ border = "rounded" })<cr>', bufopt)
+  map("n", "gl", '<cmd>lua vim.diagnostic.open_float({ border = "rounded" })<cr>', bufopt)
+  map("n", "<leader>q", "<cmd>lua vim.diagnostic.setloclist()<cr>", bufopt)
 end
 
 local sections = {
@@ -123,53 +127,53 @@ which_key.register({
   ["<Leader>"] = {
     d = {
       name = "Debug",
-      t = { "<cmd>lua require('dap').toggle_breakpoint()<CR>", "Toggle breakpoint" },
-      S = { "<cmd>lua require('dap').continue()<CR>", "Start debugging"},
+      t = { "<cmd>lua require('dap').toggle_breakpoint()<cr>", "Toggle breakpoint" },
+      S = { "<cmd>lua require('dap').continue()<cr>", "Start debugging" },
       s = {
         name = "+Step",
-        c = { "<cmd>lua require('dap').continue()<CR>", "Continue" },
-        v = { "<cmd>lua require('dap').step_over()<CR>", "Step Over" },
-        i = { "<cmd>lua require('dap').step_into()<CR>", "Step Into" },
-        o = { "<cmd>lua require('dap').step_out()<CR>", "Step Out" },
+        c = { "<cmd>lua require('dap').continue()<cr>", "Continue" },
+        v = { "<cmd>lua require('dap').step_over()<cr>", "Step Over" },
+        i = { "<cmd>lua require('dap').step_into()<cr>", "Step Into" },
+        o = { "<cmd>lua require('dap').step_out()<cr>", "Step Out" },
       },
       h = {
         name = "+Hover",
-        h = { "<cmd>lua require('dap.ui.variables').hover()<CR>", "Hover" },
-        v = { "<cmd>lua require('dap.ui.variables').visual_hover()<CR>", "Visual Hover" },
+        h = { "<cmd>lua require('dap.ui.variables').hover()<cr>", "Hover" },
+        v = { "<cmd>lua require('dap.ui.variables').visual_hover()<cr>", "Visual Hover" },
       },
       u = {
         name = "+UI",
-        h = { "<cmd>lua require('dap.ui.widgets').hover()<CR>", "Hover" },
-        f = { "local widgets=require('dap.ui.widgets');widgets.centered_float(widgets.scopes)<CR>", "Float" },
+        h = { "<cmd>lua require('dap.ui.widgets').hover()<cr>", "Hover" },
+        f = { "local widgets=require('dap.ui.widgets');widgets.centered_float(widgets.scopes)<cr>", "Float" },
       },
       r = {
         name = "+Repl",
-        o = { "<cmd>lua require('dap').repl.open()<CR>", "Open" },
-        l = { "<cmd>lua require('dap').repl.run_last()<CR>", "Run Last" },
+        o = { "<cmd>lua require('dap').repl.open()<cr>", "Open" },
+        l = { "<cmd>lua require('dap').repl.run_last()<cr>", "Run Last" },
       },
       b = {
         name = "+Breakpoints",
-        t = { "<cmd>lua require('dap').toggle_breakpoint()<CR>", "Toggle" },
+        t = { "<cmd>lua require('dap').toggle_breakpoint()<cr>", "Toggle" },
         c = {
-          "<cmd>lua require('dap').set_breakpoint(vim.fn.input('Breakpoint condition: '))<CR>",
+          "<cmd>lua require('dap').set_breakpoint(vim.fn.input('Breakpoint condition: '))<cr>",
           "Breakpoint Condition",
         },
         m = {
-          "<cmd>lua require('dap').set_breakpoint({ nil, nil, vim.fn.input('Log point message: ') })<CR>",
+          "<cmd>lua require('dap').set_breakpoint({ nil, nil, vim.fn.input('Log point message: ') })<cr>",
           "Log Point Message",
         },
       },
-      c = { "<cmd>lua require('dap').scopes()<CR>", "Scopes" },
+      c = { "<cmd>lua require('dap').scopes()<cr>", "Scopes" },
     },
   }
 })
-keymap("n", "<F3>", "<cmd>lua require('dap').terminate()<CR>", opts)
-keymap("n", "<F4>", "<cmd>lua require('dap').toggle_breakpoint()<CR>", opts)
-keymap("n", "<F5>", "<cmd>lua require('dap').continue()<CR>", opts)
-keymap("n", "<F6>", "<cmd>lua require('dap').step_over()<CR>", opts)
-keymap("n", "<F7>", "<cmd>lua require('dap').step_into()<CR>", opts)
-keymap("n", "<F8>", "<cmd>lua require('dap').step_out()<CR>", opts)
-keymap("n", "<F9>", "<cmd>lua require('dap').repl.open()<CR>", opts)
+map("n", "<F3>", "<cmd>lua require('dap').terminate()<cr>")
+map("n", "<F4>", "<cmd>lua require('dap').toggle_breakpoint()<cr>")
+map("n", "<F5>", "<cmd>lua require('dap').continue()<cr>")
+map("n", "<F6>", "<cmd>lua require('dap').step_over()<cr>")
+map("n", "<F7>", "<cmd>lua require('dap').step_into()<cr>")
+map("n", "<F8>", "<cmd>lua require('dap').step_out()<cr>")
+map("n", "<F9>", "<cmd>lua require('dap').repl.open()<cr>")
 
 -- Lls - signature help
 -- Lld - go to definition
