@@ -1,7 +1,6 @@
 local which_key = require("which-key")
 
 local opts = { noremap = true, silent = true }
--- Shorten function name
 local keymap = vim.api.nvim_set_keymap
 
 --Remap space as leader key
@@ -9,7 +8,6 @@ keymap("", "<Space>", "<Nop>", opts)
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
 
--- Normal --
 -- Better window navigation
 keymap("n", "<C-h>", "<C-w>h", opts)
 keymap("n", "<C-j>", "<C-w>j", opts)
@@ -20,8 +18,10 @@ keymap("n", "<C-u>", "<C-u>zz", opts)
 
 -- Copies to OS clipboard
 keymap("n", "<leader>y", "\"+y", opts)
+
 keymap("n", "<leader>f", "<cmd>Telescope find_files<cr>", opts)
 keymap("n", "<leader>s", "<cmd>Telescope live_grep<cr>", opts)
+keymap("n", "<leader>S", "<cmd>Telescope grep_string<cr>", opts)
 
 keymap("n", "<leader>n", "<cmd>nohl<cr>", opts)
 
@@ -39,10 +39,8 @@ keymap("n", "<S-l>", ":BufferNext<CR>", opts)
 keymap("n", "<S-h>", ":BufferPrevious<CR>", opts)
 keymap("n", "<S-x>", ":BufferClose<CR>", opts)
 
--- Insert --
 keymap("i", "jk", "<ESC>", opts)
 
--- Visual --
 -- Stay in indent mode
 keymap("v", "<", "<gv", opts)
 keymap("v", ">", ">gv", opts)
@@ -51,7 +49,6 @@ keymap("v", ">", ">gv", opts)
 keymap("v", "<A-j>", ":move .+1<CR>==", opts)
 keymap("v", "<A-k>", ":move .-2<CR>==", opts)
 
--- Visual Block --
 -- Move text up and down
 keymap("x", "K", ":move '<-2<CR>gv-gv", opts)
 keymap("x", "J", ":move '>+1<CR>gv-gv", opts)
@@ -59,16 +56,19 @@ keymap("x", "J", ":move '>+1<CR>gv-gv", opts)
 -- Copies to OS clipboard
 keymap("v", "<leader>y", "\"+y", opts)
 keymap("v", "<leader>Y", "\"+Y", opts)
-keymap("x", "<leader>y", "\"+y", opts)
-keymap("x", "<leader>Y", "\"+Y", opts)
+
+-- Replace text but dont replace default register
+keymap("x", "<leader>p", '"_dP', opts)
+
+-- Start replace in file with word under cursor
+keymap("n", "<leader>R", ":%s/<C-r><C-w>/<C-r><C-w>/gI<Left><Left><Left>", { noremap = true, silent = false })
+keymap("n", "<leader>F", ":/<C-r><C-w><CR>", { noremap = true, silent = false })
 
 
 -- LSP
 keymap("n", "<leader>r", "<cmd>lua vim.lsp.buf.format({ async = true })<cr>", opts)
 local function lsp_keymaps(bufnr)
-  -- Insert
   vim.api.nvim_buf_set_keymap(bufnr, "i", "<C-k>", "<cmd>lua vim.lsp.buf.signature_help()<CR>", opts)
-  -- Normal
   vim.api.nvim_buf_set_keymap(bufnr, "n", "gD", "<cmd>lua vim.lsp.buf.declaration()<CR>", opts)
   vim.api.nvim_buf_set_keymap(bufnr, "n", "gd", "<cmd>lua vim.lsp.buf.definition()<CR>", opts)
   vim.api.nvim_buf_set_keymap(bufnr, "n", "K", "<cmd>lua vim.lsp.buf.hover()<CR>", opts)
@@ -77,7 +77,7 @@ local function lsp_keymaps(bufnr)
   vim.api.nvim_buf_set_keymap(bufnr, "n", "<leader>rn", "<cmd>lua vim.lsp.buf.rename()<CR>", opts)
   vim.api.nvim_buf_set_keymap(bufnr, "n", "gR", "<cmd>lua vim.lsp.buf.references()<CR>", opts)
   vim.api.nvim_buf_set_keymap(bufnr, "n", "gr", "<cmd>Telescope lsp_references<CR>", opts)
-  vim.api.nvim_buf_set_keymap(bufnr, "n", "<leader>ca", "<cmd>lua vim.lsp.buf.code_action()<CR>", opts)
+  vim.api.nvim_buf_set_keymap(bufnr, "n", "ga", "<cmd>lua vim.lsp.buf.code_action()<CR>", opts)
   vim.api.nvim_buf_set_keymap(bufnr, "n", "[d", '<cmd>lua vim.diagnostic.goto_prev({ border = "rounded" })<CR>', opts)
   vim.api.nvim_buf_set_keymap(bufnr, "n", "]d", '<cmd>lua vim.diagnostic.goto_next({ border = "rounded" })<CR>', opts)
   vim.api.nvim_buf_set_keymap(bufnr, "n", "gl", '<cmd>lua vim.diagnostic.open_float({ border = "rounded" })<CR>', opts)
