@@ -41,6 +41,7 @@ map("n", "<S-Right>", ":vertical resize -2<cr>")
 map("n", "<S-l>", ":BufferNext<cr>")
 map("n", "<S-h>", ":BufferPrevious<cr>")
 map("n", "<S-x>", ":BufferClose<cr>")
+map("n", "<Leader>x", ":BufferCloseAllButCurrent<cr>")
 
 map("i", "jk", "<ESC>")
 
