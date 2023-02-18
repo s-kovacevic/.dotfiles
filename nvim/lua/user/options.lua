@@ -1,4 +1,3 @@
--- :help options
 vim.opt.backup = false                          -- creates a backup file
 vim.opt.clipboard = ""                          -- disables clipboard integration, for yank there is <Leader>y keymap that copies to OS clipboard
 vim.opt.cmdheight = 2                           -- more space in the neovim command line for displaying messages
@@ -35,10 +34,9 @@ vim.opt.sidescrolloff = 8
 vim.opt.guifont = "JetBrainsMono_Nerd_Font:h17" -- the font used in graphical neovim applications
 vim.opt.background = "dark"                     -- light or dark
 
-vim.cmd "set whichwrap+=<,>,[,],h,l"            -- allows characters to switch to the next line for example l on the end of the line will wrap around
-vim.cmd [[set iskeyword+=-]]
+vim.cmd("set whichwrap+=<,>,[,],h,l")            -- allows characters to switch to the next line for example l on the end of the line will wrap around
+vim.cmd("set iskeyword+=-")
 
--- See `:help vim.highlight.on_yank()`
 local highlight_group = vim.api.nvim_create_augroup("YankHighlight", { clear = true })
 vim.api.nvim_create_autocmd("TextYankPost", {
   desc = "Highlights yanked text",
