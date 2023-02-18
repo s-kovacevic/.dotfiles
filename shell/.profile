@@ -1,6 +1,7 @@
 source ~/.secrets
 
 export PATH="~/.npm-global/bin:$PATH"
+export PATH="/opt/homebrew/bin:$PATH"
 export PATH="$HOME/bin:/usr/local/bin:$PATH"
 export PATH="$HOME/.local/bin:$PATH"
 export PATH="$HOME/.local/scripts:$PATH"
@@ -14,10 +15,17 @@ export XBAR_PLUGIN_DIR="/Users/savo/Library/Application Support/xbar/plugins"
 export RLBAR_GITHUB_TOKEN=$rlGithubToken
 export RLBAR_GITHUB_USERNAME=$rlGithubUser
 
+# Brew
 # PLEASE STOP BREAKING EVERYTHING !!!
 export HOMEBREW_NO_AUTO_UPDATE=1
+export HOMEBREW_NO_ANALYTICS=1
+export HOMEBREW_NO_GOOGLE_ANALYTICS=1
 
+# Go stuff
 export GOPRIVATE=github.rl.lan
+# Turn off google proxy https://proxy.golang.org/
+export GOPROXY=direct
+export GOSUMDB=off
 
 # Setup jump https://github.com/gsamokovarov/jump
 eval "$(jump shell zsh)"
