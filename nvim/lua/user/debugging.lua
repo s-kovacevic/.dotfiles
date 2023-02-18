@@ -33,6 +33,16 @@ dap.adapters.python = function(cb, config)
   end
 end
 
+dap.adapters.go = {
+  type = 'server',
+  port = '${port}',
+  executable = {
+    command = 'dlv',
+    args = {'dap', '-l', '127.0.0.1:${port}'},
+  }
+}
+
+
 if vscode.launch_file_exists() then
   dap_vscode.load_launchjs()
 else
@@ -44,7 +54,32 @@ else
       program = "${file}"; -- This configuration will launch the current file if used.
     },
   }
+  -- https://github.com/go-delve/delve/blob/master/Documentation/usage/dlv_dap.md
+  dap.configurations.go = {
+    {
+      type = "delve",
+      name = "Debug",
+      request = "launch",
+      program = "${file}"
+    },
+    {
+      type = "delve",
+      name = "Debug test", -- configuration for debugging test files
+      request = "launch",
+      mode = "test",
+      program = "${file}"
+    },
+    -- works with go.mod packages and sub packages 
+    {
+      type = "delve",
+      name = "Debug test (go.mod)",
+      request = "launch",
+      mode = "test",
+      program = "./${relativeFileDirname}"
+    }
+  }
 end
+
 
 require("nvim-dap-virtual-text").setup({
   enabled = true, -- enable this plugin (the default)
