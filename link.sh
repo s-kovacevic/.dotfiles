@@ -1,7 +1,7 @@
 #!/bin/bash
 # Repository must be cloned to ~ directory since links are created with the absolute path
 # shell/.secrets file must be created and populated before running this script
-mkdir -p ~/.local/config
+mkdir -p ~/.config
 ln -sfh ~/.dotfiles/nvim/ ~/.config/nvim
 ln -sfh ~/.dotfiles/alacritty/ ~/.config/alacritty
 ln -sfh ~/.dotfiles/shell/.zshrc ~/.zshrc
