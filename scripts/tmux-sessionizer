@@ -1,5 +1,4 @@
 #!/usr/bin/env sh
-# Stolen from The Primeagen
 
 if [[ $# -eq 1 ]]; then
   selected=$1
