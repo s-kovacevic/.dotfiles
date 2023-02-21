@@ -1,5 +1,5 @@
 local servers = {
-	"sumneko_lua",
+	"lua_ls",
   "tsserver",
 	"pyright",
 	"jsonls",
@@ -28,7 +28,9 @@ require("mason").setup({
     },
   }
 })
-require("mason-lspconfig").setup()
+require("mason-lspconfig").setup({
+  ensure_installed = servers
+})
 require("user.lsp.handlers").setup()
 
 for _, server in pairs(servers) do
