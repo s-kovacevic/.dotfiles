@@ -3,7 +3,7 @@ export ZSH="$HOME/.oh-my-zsh"
 if [[ -z "$TMUX" ]]; then
     ZSH_THEME="robbyrussell"
 else
-    ZSH_THEME="customsuvash"
+    ZSH_THEME="simplesuvash"
 fi
 
 plugins=(zsh-autosuggestions)

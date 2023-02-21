@@ -27,6 +27,9 @@ export GOPRIVATE=github.rl.lan
 export GOPROXY=direct
 export GOSUMDB=off
 
+# Python
+export PIP_REQUIRE_VIRTUALENV=true
+
 # Setup jump https://github.com/gsamokovarov/jump
 eval "$(jump shell zsh)"
 
