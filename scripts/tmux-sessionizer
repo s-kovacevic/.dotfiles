@@ -3,7 +3,7 @@
 if [[ $# -eq 1 ]]; then
   selected=$1
 else
-  dirs=$(find ~/Documents/Projects ~/Documents/Projects/ReversingLabs -mindepth 1 -maxdepth 1 -type d)
+  dirs=$(find ~/Documents/Projects ~/Documents/MyProjects -mindepth 1 -maxdepth 1 -type d)
   # Add .dotfiles manually since it is not in these directories and I dont want other dirs from home directory
   dirs+="\n/Users/savo/.dotfiles"
   selected=$(echo "$dirs" | fzf)
