@@ -1,5 +1,10 @@
 source ~/.secrets
 
+# Disable Alacritty icon bouncing on MacOS
+printf "\e[?1042l"
+
+export LANG=en_US.UTF-8
+
 export PATH="~/.npm-global/bin:$PATH"
 export PATH="/opt/homebrew/bin:$PATH"
 export PATH="$HOME/bin:/usr/local/bin:$PATH"
@@ -22,13 +27,16 @@ export HOMEBREW_NO_ANALYTICS=1
 export HOMEBREW_NO_GOOGLE_ANALYTICS=1
 
 # Go stuff
-export GOPRIVATE=github.rl.lan
+export GOPRIVATE=github.rl.lan,alt-gitlab.rl.lan
 # Turn off google proxy https://proxy.golang.org/
 export GOPROXY=direct
 export GOSUMDB=off
 
 # Python
 export PIP_REQUIRE_VIRTUALENV=true
+
+# AWS
+export AWS_PAGER=""
 
 # Setup jump https://github.com/gsamokovarov/jump
 eval "$(jump shell zsh)"
@@ -90,6 +98,13 @@ function kubectlDescribeSecret() {
   kubectl get $secret -n $namespace -o go-template='{{range $k,$v := .data}}{{"-- "}}{{$k}}{{"\n"}}{{$v|base64decode}}{{"\n\n"}}{{end}}'
 }
 
+function weather() {
+  curl -s "wttr.in/Novi+Sad";
+}
+
+function cheat() {
+  curl -s "cheat.sh/$1";
+}
 
 # Aliases
 alias hgrep=grepHistory
@@ -106,3 +121,4 @@ alias dcd='docker-compose down'
 alias dcu='docker-compose up'
 alias dcb='docker-compose build'
 alias dcl='docker-compose logs'
+alias ff='python3 -m webbrowser'

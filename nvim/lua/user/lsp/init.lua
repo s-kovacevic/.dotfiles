@@ -5,6 +5,8 @@ local servers = {
 	"jsonls",
   "yamlls",
   "gopls",
+  "docker_compose_language_service",
+  "dockerls",
 }
 
 require("mason").setup({

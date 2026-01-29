@@ -45,6 +45,14 @@ dap.adapters.go = {
 
 if vscode.launch_file_exists() then
   dap_vscode.load_launchjs()
+  --[[ dap.configurations.python = { ]]
+  --[[   { ]]
+  --[[     type = 'python'; ]]
+  --[[     request = 'attach'; ]]
+  --[[     host = 'localhost'; ]]
+  --[[     port = 5678; ]]
+  --[[   }, ]]
+  --[[ }; ]]
 else
   dap.configurations.python = {
     {
